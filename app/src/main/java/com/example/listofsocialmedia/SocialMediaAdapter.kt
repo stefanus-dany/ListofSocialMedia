@@ -1,5 +1,6 @@
 package com.example.listofsocialmedia
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,21 +9,10 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.view.menu.MenuView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 
 class SocialMediaAdapter(val listData: ArrayList<SocialMedia>) :
     RecyclerView.Adapter<SocialMediaAdapter.ViewHolder>() {
-
-    private lateinit var onItemClickCallback: OnItemClickCallback
-
-    //bikin setonclick itemview di mainActivity
-    fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
-        this.onItemClickCallback = onItemClickCallback
-    }
-    interface OnItemClickCallback {
-        fun onItemClicked(data: SocialMedia)
-    }
-
-    //bikin setonclick itemview di mainActivity
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
         val view: View =
@@ -31,7 +21,8 @@ class SocialMediaAdapter(val listData: ArrayList<SocialMedia>) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.fotoProfil.setImageResource(listData[position].fotoProfil)
+
+        Glide.with(holder.itemView.context).load(listData[position].fotoProfil).into(holder.fotoProfil)
         holder.title.text = listData[position].title
         holder.subTitle.text = listData[position].subTitle
 
@@ -45,13 +36,8 @@ class SocialMediaAdapter(val listData: ArrayList<SocialMedia>) :
         }
 
         //keseluruhan item diklik tapi di kelas socialMediaAdapter
-//        holder.itemView.setOnClickListener {
-//            Toast.makeText(holder.itemView.context, "Satu Item View dklik" + listData[position].subTitle, Toast.LENGTH_SHORT).show()
-//        }
-
-        //keseluruhan item diklik tapi di kelas MainActivity nya
         holder.itemView.setOnClickListener {
-            onItemClickCallback.onItemClicked(listData[holder.adapterPosition])
+            Toast.makeText(holder.itemView.context, "Satu Item View dklik" + listData[position].title, Toast.LENGTH_SHORT).show()
         }
     }
 

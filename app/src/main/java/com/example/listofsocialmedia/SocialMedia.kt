@@ -1,5 +1,7 @@
 package com.example.listofsocialmedia
 
-data class SocialMedia(var fotoProfil : Int, var title : String, var subTitle : String){
-
+class SocialMedia{
+    var fotoProfil : String = ""
+    var title : String = ""
+    var subTitle : String = ""
 }
